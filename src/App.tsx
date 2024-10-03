@@ -3,10 +3,9 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, get, child } from "firebase/database";
 import { firebaseConfig } from './firebaseConfig';
 import { Fireworks } from '@fireworks-js/react';
+import { Engine } from "@tsparticles/engine";
 import { loadFull } from "tsparticles";
-import Particles from "react-tsparticles";
-import { Engine } from 'tsparticles-engine';
-
+import Particles from '@tsparticles/react';
 
 // Firebase configuration
 initializeApp(firebaseConfig);
@@ -72,7 +71,6 @@ export const App = () => {
       {!isOn && (
         <Particles
           id="tsparticles"
-          init={particlesInit}
           options={{
             fullScreen: { enable: true },
             particles: {
