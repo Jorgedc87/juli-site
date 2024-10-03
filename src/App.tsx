@@ -12,16 +12,21 @@ initializeApp(firebaseConfig);
 
 export const App = () => {
   const [isOn, setIsOn] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showFireworks, setShowFireworks] = useState(false); // Estado para controlar los fuegos artificiales
   const db = getDatabase();
 
   useEffect(() => {
     const dbRef = ref(db);
-    get(child(dbRef, `switchState`)).then((snapshot) => {
-      if (snapshot.exists()) {
-        setIsOn(snapshot.val());
-      }
-    });
+    get(child(dbRef, `switchState`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setIsOn(snapshot.val());
+        }
+      })
+      .finally(() => {
+        setLoading(false);  // Cuando los datos se han cargado, desactiva el loading
+      });
   }, [db]);
 
   const toggleSwitch = () => {
@@ -40,6 +45,19 @@ export const App = () => {
   // const particlesInit = async (engine: Engine) => {
   //   await loadFull(engine);
   // };
+
+  if (loading) {
+    return (
+      <div className="h-screen bg-slate-600 flex flex-col justify-center items-centerr">
+        <header className={`w-full h-[200px] fixed top-0 flex justify-center items-center p-4 text-center transition-all duration-500 bg-[#497fb1]`}>
+        <h1 className="text-5xl font-nunito text-white">
+          Cargando estado de la relación...
+        </h1>
+      </header>
+        
+      </div>
+    );
+  }
 
   return (
     <div className={`h-screen bg-slate-600 flex flex-col justify-center items-center ${isOn ? 'bg-green-50' : 'bg-red-50'}`}>
