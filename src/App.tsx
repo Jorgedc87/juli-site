@@ -37,9 +37,9 @@ export const App = () => {
     }
   };
 
-  const particlesInit = async (engine: Engine) => {
-    await loadFull(engine);
-  };
+  // const particlesInit = async (engine: Engine) => {
+  //   await loadFull(engine);
+  // };
 
   return (
     <div className={`h-screen bg-slate-600 flex flex-col justify-center items-center ${isOn ? 'bg-green-50' : 'bg-red-50'}`}>
